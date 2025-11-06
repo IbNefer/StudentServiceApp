@@ -6,7 +6,17 @@ using System.Threading.Tasks;
 
 namespace Domain.Entity
 {
-    internal class AreaConocimiento
+    public class AreaConocimiento
     {
+        public int Id { get; set; }
+        public string NombreArea { get; set; } = string.Empty;
+        public string CodigoArea { get; set; } = string.Empty;
+
+        public int DepartamentoId { get; set; }
+        public Departamento Departamento { get; set; }
+
+        public List<Asignatura> Asignaturas { get; set; } = new List<Asignatura>();
+
+        public List<Profesor> Profesores { get; set; } = new List<Profesor>();
     }
 }

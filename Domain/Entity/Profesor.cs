@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Entity.ProfesorEntity
+namespace Domain.Entity
 {
-    public class Teachers
+    public class Profesor : Persona
     {
-        public int TeacherId { get; set; }
-        public string Name { get; set; }
-        public string dni_id { get; set; }
+        public int AreaConocimientoId { get; set; }
+        public AreaConocimiento? AreaConocimiento { get; set; }
+
+        public int DepartamentoId { get; set; }
+        public Departamento? Departamento { get; set; }
     }
 }
