@@ -29,61 +29,56 @@ namespace Infrastructure.Data
 
 
             modelBuilder.Entity<Titulacion>()
-                .HasOne(t => t.Departamento) // La Titulacion tiene un Departamento
-                .WithMany(d => d.Titulaciones) // El Departamento tiene muchas Titulaciones
-                .HasForeignKey(t => t.DepartamentoId) // La clave foránea
-                .OnDelete(DeleteBehavior.Restrict); // ¡ESTA ES LA SOLUCIÓN!
+                .HasOne(t => t.Departamento) 
+                .WithMany(d => d.Titulaciones) 
+                .HasForeignKey(t => t.DepartamentoId) 
+                .OnDelete(DeleteBehavior.Restrict);
 
-            // 2. Configura la relación Departamento -> AreaConocimiento
-            // Le decimos que NO borre en cascada
+
             modelBuilder.Entity<AreaConocimiento>()
-                .HasOne(a => a.Departamento) // El Area tiene un Departamento
-                .WithMany(d => d.AreasConocimiento) // El Depto. tiene muchas Areas
-                .HasForeignKey(a => a.DepartamentoId) // La clave foránea
-                .OnDelete(DeleteBehavior.Restrict); // ¡ESTA ES LA SOLUCIÓN!
+                .HasOne(a => a.Departamento)
+                .WithMany(d => d.AreasConocimiento) 
+                .HasForeignKey(a => a.DepartamentoId) 
+                .OnDelete(DeleteBehavior.Restrict);
 
-            // 1. Para AsignaturaEquivalencia
+
             modelBuilder.Entity<AsignaturaEquivalencia>()
                 .HasOne(ae => ae.Asignatura)
-                .WithMany() // Asumimos que Asignatura no tiene una lista de "Equivalencias"
+                .WithMany() 
                 .HasForeignKey(ae => ae.AsignaturaId)
-                .OnDelete(DeleteBehavior.Restrict); // <-- SOLUCIÓN
+                .OnDelete(DeleteBehavior.Restrict); 
 
             modelBuilder.Entity<AsignaturaEquivalencia>()
                 .HasOne(ae => ae.AsignaturaEquivalente)
-                .WithMany() // Asumimos que Asignatura no tiene una lista de "Equivalentes"
+                .WithMany() 
                 .HasForeignKey(ae => ae.AsignaturaEquivalenteId)
-                .OnDelete(DeleteBehavior.Restrict); // <-- SOLUCIÓN
+                .OnDelete(DeleteBehavior.Restrict); 
 
-            // 2. Para AsignaturaIncompatibilidad
             modelBuilder.Entity<AsignaturaIncompatibilidad>()
                 .HasOne(ai => ai.Asignatura)
-                .WithMany() // Asumimos que no hay lista de vuelta
+                .WithMany() 
                 .HasForeignKey(ai => ai.AsignaturaId)
-                .OnDelete(DeleteBehavior.Restrict); // <-- SOLUCIÓN
+                .OnDelete(DeleteBehavior.Restrict); 
 
             modelBuilder.Entity<AsignaturaIncompatibilidad>()
-                .HasOne(ai => ai.AsignaturaIncompatible) // Asumo que tu propiedad se llama así
-                .WithMany() // Asumimos que no hay lista de vuelta
+                .HasOne(ai => ai.AsignaturaIncompatible) 
+                .WithMany()
                 .HasForeignKey(ai => ai.AsignaturaIncompatibleId)
-                .OnDelete(DeleteBehavior.Restrict); // <-- SOLUCIÓN
+                .OnDelete(DeleteBehavior.Restrict); 
 
-            // 1. Rompe el ciclo AreaConocimiento -> Profesor
-            // (Asumo que tu AreaConocimiento tiene List<Profesor> Profesores)
+
             modelBuilder.Entity<Profesor>()
                 .HasOne(p => p.AreaConocimiento)
-                .WithMany(a => a.Profesores) // <-- Nombre de la lista en AreaConocimiento
+                .WithMany(a => a.Profesores)
                 .HasForeignKey(p => p.AreaConocimientoId)
-                .OnDelete(DeleteBehavior.Restrict); // ¡SOLUCIÓN!
+                .OnDelete(DeleteBehavior.Restrict); 
 
-            // 2. Rompe el ciclo AreaConocimiento -> Asignatura
-            // (Asumo que Asignatura tiene AreaConocimientoId, pero
-            // AreaConocimiento no tiene List<Asignatura>)
+           
             modelBuilder.Entity<Asignatura>()
                 .HasOne(a => a.AreaConocimiento)
-                .WithMany() // <-- Vacío si no hay lista en AreaConocimiento
+                .WithMany() 
                 .HasForeignKey(a => a.AreaConocimientoId)
-                .OnDelete(DeleteBehavior.Restrict); // ¡SOLUCIÓN!
+                .OnDelete(DeleteBehavior.Restrict); 
 
         }
 
