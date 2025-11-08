@@ -10,4 +10,8 @@
     <Folder Include="Entity\Authentication\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="ServiceStack.Interfaces" Version="8.9.0" />
+  </ItemGroup>
+
 </Project>
