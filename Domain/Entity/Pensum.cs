@@ -12,7 +12,11 @@ namespace Domain.Entity
         public int Año { get; set; }
         public string Descripcion { get; set; } = string.Empty;
 
+        public int TitulacionId { get; set; }
+        public Titulacion? Titulacion { get; set; }
 
+
+        public List<Asignatura> Asignaturas { get; set; } = new List<Asignatura>();
 
     }
 }

@@ -10,10 +10,10 @@ namespace Domain.Entity
     {
         
         public int AsignaturaId { get; set; }
-        public Asignatura Asignatura { get; set; }
+        public Asignatura? Asignatura { get; set; }
 
      
         public int AsignaturaEquivalenteId { get; set; }
-        public Asignatura AsignaturaEquivalente { get; set; }
+        public Asignatura? AsignaturaEquivalente { get; set; }
     }
 }
