@@ -10,7 +10,6 @@
     <Folder Include="DI\" />
     <Folder Include="Contracts\" />
     <Folder Include="DTOs\Response\" />
-    <Folder Include="DTOs\Request\" />
     <Folder Include="Extensions\" />
     <Folder Include="Services\" />
   </ItemGroup>
