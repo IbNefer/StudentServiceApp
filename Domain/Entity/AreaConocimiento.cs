@@ -15,8 +15,6 @@ namespace Domain.Entity
         public int DepartamentoId { get; set; }
         public Departamento Departamento { get; set; }
 
-        public List<Asignatura> Asignaturas { get; set; } = new List<Asignatura>();
-
         public List<Profesor> Profesores { get; set; } = new List<Profesor>();
     }
 }

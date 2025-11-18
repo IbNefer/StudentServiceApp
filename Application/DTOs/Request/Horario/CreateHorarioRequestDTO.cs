@@ -3,17 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
-namespace Domain.Entity
+namespace Application.DTOs.Request.Horario
 {
-    public class Horario
+    public class CreateHorarioRequestDTO
     {
-        public int Id { get; set; }
+        [Required]
         public string DiaSemana { get; set; } = string.Empty;
+
+        [Required]
         public TimeSpan HoraInicio { get; set; }
+
+        [Required]
         public TimeSpan HoraFin { get; set; }
 
+        [Required]
         public int AsignaturaId { get; set; }
-        public Asignatura Asignatura { get; set; }
+
     }
 }
