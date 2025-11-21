@@ -9,7 +9,13 @@
   <ItemGroup>
     <Folder Include="DI\" />
     <Folder Include="Contracts\" />
-    <Folder Include="DTOs\Response\" />
+    <Folder Include="DTOs\Response\Account\" />
+    <Folder Include="DTOs\Response\AreaConocimiento\" />
+    <Folder Include="DTOs\Response\Asignatura\" />
+    <Folder Include="DTOs\Response\Departamento\" />
+    <Folder Include="DTOs\Response\Horario\" />
+    <Folder Include="DTOs\Response\Materia\" />
+    <Folder Include="DTOs\Response\Titulacion\" />
     <Folder Include="Extensions\" />
     <Folder Include="Services\" />
   </ItemGroup>
