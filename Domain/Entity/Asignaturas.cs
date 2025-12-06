@@ -19,6 +19,8 @@ namespace Domain.Entity
         public int AreaConocimientoId { get; set; }
         public AreaConocimiento? AreaConocimiento { get; set; }
 
+        public List<Titulacion> Titulaciones { get; set; } = new List<Titulacion>();
         public List<Estudiante> Estudiantes { get; set; } = new List<Estudiante>();
+        public List<Horario> Horarios { get; set; } = new List<Horario>();
     }
 }

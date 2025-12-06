@@ -1,15 +1,12 @@
 ﻿using Domain.Entity;
+using Domain.Entity.Authentication;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Infrastructure.Data
 {
-    public class AppDbContext: IdentityDbContext 
+    public class AppDbContext: IdentityDbContext<ApplicationUser>
     {
         public AppDbContext(DbContextOptions<AppDbContext>options): base(options)
         {
@@ -82,9 +79,8 @@ namespace Infrastructure.Data
 
         }
 
-
-        public DbSet<Materia> Materias { get; set; }
         public DbSet<Pensum> Pensums { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<AsignaturasPorProfesor> AsignaturasPorProfesores { get; set; }
         public DbSet<Profesor> Profesores { get; set; }
         public DbSet<Estudiante> Estudiantes { get; set; }
@@ -98,4 +94,6 @@ namespace Infrastructure.Data
         public DbSet<AsignaturaEquivalencia> AsignaturaEquivalencias { get; set; }
         public DbSet<AsignaturaIncompatibilidad> AsignaturaIncompatibilidades { get; set; }
     }
+
+
 }

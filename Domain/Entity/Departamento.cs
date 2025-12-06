@@ -15,5 +15,6 @@ namespace Domain.Entity
 
         public List<Titulacion> Titulaciones { get; set; } = new List<Titulacion>();
         public List<AreaConocimiento> AreasConocimiento { get; set; } = new List<AreaConocimiento>();
+        public List<Profesor> Profesores { get; set; } = new List<Profesor>();
     }
 }

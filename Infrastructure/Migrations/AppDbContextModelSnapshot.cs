@@ -74,6 +74,9 @@ namespace Infrastructure.Migrations
                     b.Property<int>("AreaConocimientoId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("AreaConocimientoId1")
+                        .HasColumnType("int");
+
                     b.Property<string>("CodigoAsignatura")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -95,6 +98,8 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AreaConocimientoId");
+
+                    b.HasIndex("AreaConocimientoId1");
 
                     b.HasIndex("PensumId");
 
@@ -144,6 +149,103 @@ namespace Infrastructure.Migrations
                     b.HasIndex("AsignaturaId");
 
                     b.ToTable("AsignaturasPorProfesores");
+                });
+
+            modelBuilder.Entity("Domain.Entity.Authentication.ApplicationUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entity.Authentication.RefreshToken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RefreshTokens");
                 });
 
             modelBuilder.Entity("Domain.Entity.Departamento", b =>
@@ -215,40 +317,16 @@ namespace Infrastructure.Migrations
                     b.Property<TimeSpan>("HoraInicio")
                         .HasColumnType("time");
 
+                    b.Property<int>("ProfesorId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AsignaturaId");
 
+                    b.HasIndex("ProfesorId");
+
                     b.ToTable("Horarios");
-                });
-
-            modelBuilder.Entity("Domain.Entity.Materia", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AreaConocimientoId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Codigo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Creditos")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AreaConocimientoId");
-
-                    b.ToTable("Materias");
                 });
 
             modelBuilder.Entity("Domain.Entity.Pensum", b =>
@@ -263,6 +341,10 @@ namespace Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NombrePensum")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -326,14 +408,14 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("AsignaturaId")
+                        .HasColumnType("int");
+
                     b.Property<string>("CodigoTitulacion")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("DepartamentoId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("MateriaId")
                         .HasColumnType("int");
 
                     b.Property<string>("NombreTitulacion")
@@ -346,9 +428,9 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DepartamentoId");
+                    b.HasIndex("AsignaturaId");
 
-                    b.HasIndex("MateriaId");
+                    b.HasIndex("DepartamentoId");
 
                     b.ToTable("Titulaciones");
                 });
@@ -403,71 +485,6 @@ namespace Infrastructure.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetRoleClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -555,17 +572,12 @@ namespace Infrastructure.Migrations
                 {
                     b.HasBaseType("Domain.Entity.Persona");
 
-                    b.Property<int?>("MateriaId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Matricula")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("TitulacionId")
                         .HasColumnType("int");
-
-                    b.HasIndex("MateriaId");
 
                     b.HasIndex("TitulacionId");
 
@@ -579,7 +591,12 @@ namespace Infrastructure.Migrations
                     b.Property<int>("AreaConocimientoId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("DepartamentoId")
+                        .HasColumnType("int");
+
                     b.HasIndex("AreaConocimientoId");
+
+                    b.HasIndex("DepartamentoId");
 
                     b.HasDiscriminator().HasValue("Profesor");
                 });
@@ -617,6 +634,10 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("AreaConocimientoId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("Domain.Entity.AreaConocimiento", null)
+                        .WithMany("Asignaturas")
+                        .HasForeignKey("AreaConocimientoId1");
 
                     b.HasOne("Domain.Entity.Pensum", null)
                         .WithMany("Asignaturas")
@@ -696,23 +717,20 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entity.Horario", b =>
                 {
                     b.HasOne("Domain.Entity.Asignatura", "Asignatura")
-                        .WithMany()
+                        .WithMany("Horarios")
                         .HasForeignKey("AsignaturaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Asignatura");
-                });
-
-            modelBuilder.Entity("Domain.Entity.Materia", b =>
-                {
-                    b.HasOne("Domain.Entity.AreaConocimiento", "AreaConocimiento")
+                    b.HasOne("Domain.Entity.Profesor", "Profesor")
                         .WithMany()
-                        .HasForeignKey("AreaConocimientoId")
+                        .HasForeignKey("ProfesorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("AreaConocimiento");
+                    b.Navigation("Asignatura");
+
+                    b.Navigation("Profesor");
                 });
 
             modelBuilder.Entity("Domain.Entity.Pensum", b =>
@@ -728,15 +746,15 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entity.Titulacion", b =>
                 {
+                    b.HasOne("Domain.Entity.Asignatura", null)
+                        .WithMany("Titulaciones")
+                        .HasForeignKey("AsignaturaId");
+
                     b.HasOne("Domain.Entity.Departamento", "Departamento")
                         .WithMany("Titulaciones")
                         .HasForeignKey("DepartamentoId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.HasOne("Domain.Entity.Materia", null)
-                        .WithMany("Titulaciones")
-                        .HasForeignKey("MateriaId");
 
                     b.Navigation("Departamento");
                 });
@@ -752,7 +770,7 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("Domain.Entity.Authentication.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -761,7 +779,7 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("Domain.Entity.Authentication.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -776,7 +794,7 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("Domain.Entity.Authentication.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -785,7 +803,7 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("Domain.Entity.Authentication.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -794,10 +812,6 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entity.Estudiante", b =>
                 {
-                    b.HasOne("Domain.Entity.Materia", null)
-                        .WithMany("EstudiantesMatriculados")
-                        .HasForeignKey("MateriaId");
-
                     b.HasOne("Domain.Entity.Titulacion", "Titulacion")
                         .WithMany("Estudiantes")
                         .HasForeignKey("TitulacionId")
@@ -815,24 +829,32 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("Domain.Entity.Departamento", null)
+                        .WithMany("Profesores")
+                        .HasForeignKey("DepartamentoId");
+
                     b.Navigation("AreaConocimiento");
                 });
 
             modelBuilder.Entity("Domain.Entity.AreaConocimiento", b =>
                 {
+                    b.Navigation("Asignaturas");
+
                     b.Navigation("Profesores");
+                });
+
+            modelBuilder.Entity("Domain.Entity.Asignatura", b =>
+                {
+                    b.Navigation("Horarios");
+
+                    b.Navigation("Titulaciones");
                 });
 
             modelBuilder.Entity("Domain.Entity.Departamento", b =>
                 {
                     b.Navigation("AreasConocimiento");
 
-                    b.Navigation("Titulaciones");
-                });
-
-            modelBuilder.Entity("Domain.Entity.Materia", b =>
-                {
-                    b.Navigation("EstudiantesMatriculados");
+                    b.Navigation("Profesores");
 
                     b.Navigation("Titulaciones");
                 });

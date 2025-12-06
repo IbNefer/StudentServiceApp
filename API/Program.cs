@@ -1,29 +1,37 @@
-using Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
+using Infrastructure.DI;
 
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-// Add services to the container.
 
+builder.Services.AddAutoMapper(typeof(Application.Mappings.MappingProfile));
+
+// B. Controllers (Una sola vez)
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+
+// C. Swagger / OpenAPI
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 builder.Services.AddOpenApi();
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(connectionString));
+
+builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// 2. MIDDLEWARE
+// --------------------------------------------------------------------------------
+
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
+app.UseCors("WebUi");
 app.UseHttpsRedirection();
 
+app.UseAuthentication(); // Importante para Identity
 app.UseAuthorization();
 
 app.MapControllers();

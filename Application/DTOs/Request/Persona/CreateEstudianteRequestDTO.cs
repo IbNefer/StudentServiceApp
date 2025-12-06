@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.DTOs.Request.Persona
 {
-    public class CreateEstudianteRequestDTO
+    public class CreateEstudianteRequestDTO: PersonaDTO
     {
         [Required(ErrorMessage = "La matrícula es obligatoria.")]
         public string Matricula { get; set; } = string.Empty;

@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Application.DTOs.Request.Titulacion
 {
-    internal class UpdateTitulacionRequestDTO
+    public class UpdateTitulacionRequestDTO: CreateTitulacionRequestDTO
     {
+        public int Id { get; set; }
     }
 }

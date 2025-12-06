@@ -8,5 +8,7 @@ namespace Application.DTOs.Request.AreaConocimiento
 {
     public class UpdateAreaConocimientoRequestDTO: CreateAreaConocimientoRequestDTO
     {
+        public int Id { get; set; }
+
     }
 }
