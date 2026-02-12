@@ -12,7 +12,12 @@ namespace Domain.Entity
         public string DiaSemana { get; set; } = string.Empty;
         public TimeSpan HoraInicio { get; set; }
         public TimeSpan HoraFin { get; set; }
-        public int AsignaturaId { get; set; }
+
+        public int AsignaturaId { get; set; } 
         public Asignatura Asignatura { get; set; }
+
+
+        public int ProfesorId { get; set; }
+        public Profesor Profesor { get; set; }
     }
 }

@@ -10,8 +10,5 @@ namespace Domain.Entity
     {
         public int AreaConocimientoId { get; set; }
         public AreaConocimiento? AreaConocimiento { get; set; }
-
-        public int DepartamentoId { get; set; }
-        public Departamento? Departamento { get; set; }
     }
 }

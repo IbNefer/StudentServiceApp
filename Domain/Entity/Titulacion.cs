@@ -13,7 +13,10 @@ namespace Domain.Entity
         public string CodigoTitulacion { get; set; } = string.Empty;
         public string Tipo { get; set; } = string.Empty;
 
-        public List<Asignatura> Asignaturas { get; set; } = new List<Asignatura>();
+        public int DepartamentoId { get; set; }
+        public Departamento? Departamento { get; set; }
+
+        public List<Pensum> Pensums { get; set; } = new List<Pensum>();
 
         public List<Estudiante> Estudiantes { get; set; } = new List<Estudiante>();
     }
